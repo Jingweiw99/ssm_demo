@@ -1,5 +1,6 @@
 package com.wjw.controller;
 
+import com.wjw.exception.BusinessException;
 import com.wjw.po.Book;
 import com.wjw.service.BookService;
 import com.wjw.vo.Code;
@@ -64,6 +65,12 @@ public class BookController {
     @GetMapping
     public Result findAll() {
         List<Book> bookList = bookService.findAll();
+        try {
+            int i =  1/ 0;
+        } catch (Exception e) {
+            // 模拟业务异常
+            throw new BusinessException(Code.BUSINESS_ERR,"这里是一个业务异常!");
+        }
         Integer code = bookList != null ? Code.SAVE_OK : Code.SAVE_ERR;
         String msg = bookList != null ? "查询成功" : "查询失败";
         return new Result(code, msg, bookList);
