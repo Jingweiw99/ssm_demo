@@ -1,10 +1,7 @@
 package com.wjw.service;
 
 import com.wjw.po.Book;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
@@ -24,4 +21,6 @@ public interface BookService {
 
     // 查询全部图书
     List<Book> findAll();
+    // 通过图书名称模糊查询
+    List<Book> getBooksByName(String name);
 }

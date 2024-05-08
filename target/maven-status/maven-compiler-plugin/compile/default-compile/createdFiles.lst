@@ -3,6 +3,8 @@ com\wjw\config\SpringMvcConfig.class
 com\wjw\config\MybatisConfig.class
 com\wjw\vo\Result.class
 com\wjw\dao\BookDao.class
+com\wjw\interceptor\MyInterceptor.class
+com\wjw\config\SpringWebSupport.class
 com\wjw\config\JdbcConfig.class
 com\wjw\vo\Code.class
 com\wjw\config\SpringConfig.class

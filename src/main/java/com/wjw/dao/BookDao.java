@@ -1,10 +1,7 @@
 package com.wjw.dao;
 
 import com.wjw.po.Book;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -28,4 +25,8 @@ public interface BookDao {
     // 查询全部图书
     @Select("select id,type,name,description from tbl_book")
     List<Book> findAll();
+
+    // 通过图书名称模糊查询
+    @Select("select id, type,name,description from tbl_book where name like concat('%',#{name}, '%')")
+    List<Book> getBooksByName(String name);
 }

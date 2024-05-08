@@ -5,6 +5,7 @@ import com.wjw.po.Book;
 import com.wjw.service.BookService;
 import com.wjw.vo.Code;
 import com.wjw.vo.Result;
+import org.apache.ibatis.annotations.Param;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -51,10 +52,10 @@ public class BookController {
         Integer code = null;
         String msg = null;
         if (book != null) {
-            code = Code.SAVE_OK;
+            code = Code.SELECT_OK;
             msg = "查询成功";
         } else {
-            code = Code.SAVE_ERR;
+            code = Code.SELECT_ERR;
             msg = "查询失败";
         }
         return new Result(code, msg, book);
@@ -65,13 +66,16 @@ public class BookController {
     @GetMapping
     public Result findAll() {
         List<Book> bookList = bookService.findAll();
-        try {
-            int i =  1/ 0;
-        } catch (Exception e) {
-            // 模拟业务异常
-            throw new BusinessException(Code.BUSINESS_ERR,"这里是一个业务异常!");
-        }
-        Integer code = bookList != null ? Code.SAVE_OK : Code.SAVE_ERR;
+        Integer code = bookList != null ? Code.SELECT_OK : Code.SELECT_ERR;
+        String msg = bookList != null ? "查询成功" : "查询失败";
+        return new Result(code, msg, bookList);
+    }
+    // 通过图书名称模糊查询 如果通过GET 传过来中文需要处理编码问题
+    @PostMapping("/search")
+    public Result getBooksByName(@RequestBody Book book) {
+        String name = book.getName();
+        List<Book> bookList = bookService.getBooksByName(name);
+        Integer code = bookList != null ? Code.SELECT_OK : Code.SELECT_ERR;
         String msg = bookList != null ? "查询成功" : "查询失败";
         return new Result(code, msg, bookList);
     }
